@@ -16,6 +16,7 @@ DESC="Watchdog for Music Player Daemon (MPD)"
 DAEMON=/usr/bin/daemon
 DAEMON_ARGS="-n $NAME -- /usr/sbin/mpd-watchdog.sh"
 PIDFILE=/var/run/mpd/$NAME.pid
+LOGFILE=/var/log/mpd/$NAME.log
 SCRIPTNAME=/etc/init.d/$NAME
 
 # Exit if the package is not installed
@@ -30,10 +31,8 @@ SCRIPTNAME=/etc/init.d/$NAME
 # Define LSB log_* functions.
 . /lib/lsb/init-functions
 
-# TODO: read from mpd.conf
-MPDUSER=mpd
-LOGFILE=/var/log/mpd/mpd-watchdog.log
-DAEMON_ARGS="-u $MPDUSER -F $PIDFILE -o $LOGFILE $DAEMON_ARGS -v"
+# Substitute configuration variables
+DAEMON_ARGS="-u ${DAEMON_USER:=mpd} -F $PIDFILE -o $LOGFILE $DAEMON_ARGS $DAEMON_OPTS"
 
 do_start()
 {
@@ -55,9 +54,17 @@ do_stop()
     #   1 if daemon was already stopped
     #   2 if daemon could not be stopped
     #   other if a failure occurred
-    start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --name $NAME
+    start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --exec $DAEMON
     RETVAL="$?"
     [ "$RETVAL" = 2 ] && return 2
+    # Wait for children to finish too if this is a daemon that forks
+    # and if the daemon is only ever run from this initscript.
+    # If the above conditions are not satisfied then add some other code
+    # that waits for the process to drop all resources that could be
+    # needed by services started subsequently.  A last resort is to
+    # sleep for some time.
+    start-stop-daemon --stop --quiet --oknodo --retry=0/30/KILL/5 --exec $DAEMON
+    [ "$?" = 2 ] && return 2
     # Many daemons don't delete their pidfiles when they exit.
     rm -f $PIDFILE
     return "$RETVAL"

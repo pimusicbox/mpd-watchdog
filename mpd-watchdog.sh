@@ -51,21 +51,28 @@ Monitor mpd while playing internet streams.
 EOF
 )
 
+log() {
+    echo $(date +'%x %T') "$PROGRAM:" "$@" >&2
+}
+
 log_error() {
-    echo "$PROGRAM:" "$@" >&2
+    log "$@"
 }
 
 log_info() {
-    [ $LOGLEVEL -gt 0 ] && echo "$PROGRAM:" "$@" >&2
+    [ $LOGLEVEL -gt 0 ] && log "$@"
 }
 
 log_debug() {
-    [ $LOGLEVEL -gt 1 ] && echo "$PROGRAM:" "$@" >&2
+    [ $LOGLEVEL -gt 1 ] && log "$@"
 }
 
 mpd_status() {
     $MPC 2>/dev/null | grep '^\[playing\]' 2>/dev/null
 }
+
+# setup signal handler
+trap 'log_info "terminating..." ; exit' TERM
 
 # parse command line options
 while getopts ":i:v" opt; do
@@ -84,6 +91,8 @@ while getopts ":i:v" opt; do
 done
 
 shift $(($OPTIND - 1))
+
+log_info "starting..."
 
 PREV_STATUS=$(mpd_status)
 
