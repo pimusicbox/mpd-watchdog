@@ -1,0 +1,5 @@
+mpd-watchdog (0.1-0tkemmer1) unstable; urgency=low
+
+  * Initial Debian package.
+
+ -- Thomas Kemmer <tkemmer@computer.org>  Fri, 25 Oct 2013 20:03:01 +0200

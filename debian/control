@@ -1,0 +1,15 @@
+Source: mpd-watchdog
+Section: contrib/sound
+Priority: extra
+Maintainer: Thomas Kemmer <tkemmer@computer.org>
+Build-Depends: debhelper (>= 8)
+Standards-Version: 3.9.4
+Homepage: https://github.com/gitkemmer/mpd-watchdog
+
+Package: mpd-watchdog
+Architecture: all
+Depends: mpc, mpd, daemon, ${misc:Depends}
+Enhances: mpd
+Description: monitor mpd while playing internet streams
+ Simple watchdog for monitoring MPD (Music Player Daemon) while
+ streaming internet radio stations.
