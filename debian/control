@@ -8,8 +8,8 @@ Homepage: https://github.com/gitkemmer/mpd-watchdog
 
 Package: mpd-watchdog
 Architecture: all
-Depends: mpc, mpd, daemon, ${misc:Depends}
-Enhances: mpd
+Depends: mpc, bsdutils, ${misc:Depends}
+Enhances: mpd, mopidy
 Description: monitor mpd while playing internet streams
- Simple watchdog for monitoring MPD (Music Player Daemon) while
+ Simple watchdog for monitoring Music Player Daemon (MPD/Mopidy) while
  streaming internet radio stations.

@@ -1,3 +1,9 @@
+mpd-watchdog (0.2-0tkemmer1) unstable; urgency=low
+
+  * Additional options, updated init script.
+
+ -- Thomas Kemmer <tkemmer@computer.org>  Tue, 03 Dec 2013 21:09:51 +0100
+
 mpd-watchdog (0.1-0tkemmer1) unstable; urgency=low
 
   * Initial Debian package.

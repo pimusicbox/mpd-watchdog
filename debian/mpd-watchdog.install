@@ -1,1 +1,1 @@
-mpd-watchdog.sh /usr/sbin
+mpd-watchdog /usr/bin

@@ -5,14 +5,5 @@
 # These options can be set to modify the behavior of the mpd-watchdog
 # init script.  The options commented out show the default values.
 
-# Path to pid file
-#PIDFILE=/var/run/mpd/mpd-watchdog.pid
-
-# Path to log file
-#LOGFILE=/var/log/mpd/mpd-watchdog.log
-
-# User the daemon shall run as
-#DAEMON_USER=mpd
-
 # Additional options passed to mpd-watchdog
-DAEMON_OPTS=""
+#DAEMON_ARGS="-s"

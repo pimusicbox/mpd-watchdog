@@ -1,8 +1,8 @@
 mpd-watchdog
 ============
 
-Monitor the Music Player Daemon (MPD) and restart playback when it
-appears to hang.  This can be especially useful when playing internet
-streams.
+Monitor a Music Player Daemon (MPD/Mopidy) and restart playback when
+it appears to hang.  This can be especially useful when playing
+internet streams.
 
 Originally based on [http://mpd.wikia.com/wiki/Hack:stream-monitor].

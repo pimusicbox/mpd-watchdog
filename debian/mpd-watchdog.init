@@ -1,22 +1,23 @@
 #!/bin/sh
 ### BEGIN INIT INFO
 # Provides:          mpd-watchdog
-# Required-Start:    $network $local_fs mpd
-# Required-Stop:     $network $local_fs mpd
+# Required-Start:    $network $local_fs
+# Required-Stop:     $network $local_fs
+# Should-Start:      mpd mopidy
+# Should-Stop:       mpd mopidy
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Watchdog for Music Player Daemon (MPD)
-# Description:       Monitor the Music Player Daemon (MPD) while
+# Short-Description: Watchdog for Music Player Daemon (MPD/Mopidy)
+# Description:       Monitor the Music Player Daemon (MPD/Mopidy) while
 #                    playing internet streams
 ### END INIT INFO
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="Watchdog for Music Player Daemon (MPD/Mopidy)"
 NAME=mpd-watchdog
-DESC="Watchdog for Music Player Daemon (MPD)"
-DAEMON=/usr/bin/daemon
-DAEMON_ARGS="-n $NAME -- /usr/sbin/mpd-watchdog.sh"
-PIDFILE=/var/run/mpd/$NAME.pid
-LOGFILE=/var/log/mpd/$NAME.log
+DAEMON=/usr/bin/mpd-watchdog
+DAEMON_ARGS="-s"
+PIDFILE=/var/run/$NAME.pid
 SCRIPTNAME=/etc/init.d/$NAME
 
 # Exit if the package is not installed
@@ -31,41 +32,22 @@ SCRIPTNAME=/etc/init.d/$NAME
 # Define LSB log_* functions.
 . /lib/lsb/init-functions
 
-# Substitute configuration variables
-DAEMON_ARGS="-u ${DAEMON_USER:=mpd} -F $PIDFILE -o $LOGFILE $DAEMON_ARGS $DAEMON_OPTS"
-
 do_start()
 {
-    # Return
-    #   0 if daemon has been started
-    #   1 if daemon was already running
-    #   2 if daemon could not be started
-    start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON --test > /dev/null \
-	|| return 1
-    start-stop-daemon --start --quiet --pidfile $PIDFILE --exec $DAEMON -- \
-	$DAEMON_ARGS \
-	|| return 2
+    start-stop-daemon --start --quiet --name $NAME --pidfile $PIDFILE \
+        --startas $DAEMON --test > /dev/null \
+        || return 1
+    start-stop-daemon --start --quiet --name $NAME --pidfile $PIDFILE \
+        --background --make-pidfile --startas $DAEMON -- $DAEMON_ARGS \
+        || return 2
 }
 
 do_stop()
 {
-    # Return
-    #   0 if daemon has been stopped
-    #   1 if daemon was already stopped
-    #   2 if daemon could not be stopped
-    #   other if a failure occurred
-    start-stop-daemon --stop --quiet --retry=TERM/30/KILL/5 --pidfile $PIDFILE --exec $DAEMON
+    start-stop-daemon --stop --quiet --name $NAME --pidfile $PIDFILE \
+        --retry=TERM/30/KILL/5
     RETVAL="$?"
     [ "$RETVAL" = 2 ] && return 2
-    # Wait for children to finish too if this is a daemon that forks
-    # and if the daemon is only ever run from this initscript.
-    # If the above conditions are not satisfied then add some other code
-    # that waits for the process to drop all resources that could be
-    # needed by services started subsequently.  A last resort is to
-    # sleep for some time.
-    start-stop-daemon --stop --quiet --oknodo --retry=0/30/KILL/5 --exec $DAEMON
-    [ "$?" = 2 ] && return 2
-    # Many daemons don't delete their pidfiles when they exit.
     rm -f $PIDFILE
     return "$RETVAL"
 }
@@ -76,7 +58,7 @@ case "$1" in
         do_start
         case "$?" in
 	    0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
-	    2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+	    2)   [ "$VERBOSE" != no ] && log_end_msg 1 ;;
 	esac
         ;;
     stop)
@@ -84,7 +66,7 @@ case "$1" in
 	do_stop
 	case "$?" in
 	    0|1) [ "$VERBOSE" != no ] && log_end_msg 0 ;;
-	    2) [ "$VERBOSE" != no ] && log_end_msg 1 ;;
+	    2)   [ "$VERBOSE" != no ] && log_end_msg 1 ;;
 	esac
 	;;
     status)
