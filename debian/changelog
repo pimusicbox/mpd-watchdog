@@ -1,3 +1,9 @@
+mpd-watchdog (0.3.0-0tkem2) stable; urgency=medium
+
+  * Move from contrib to main.
+
+ -- Thomas Kemmer <tkemmer@computer.org>  Tue, 03 Feb 2015 21:45:54 +0100
+
 mpd-watchdog (0.3.0-0tkem1) stable; urgency=low
 
   * New upstream version.

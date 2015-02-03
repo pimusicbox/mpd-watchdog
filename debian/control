@@ -1,5 +1,5 @@
 Source: mpd-watchdog
-Section: contrib/sound
+Section: main/sound
 Priority: extra
 Maintainer: Thomas Kemmer <tkemmer@computer.org>
 Build-Depends: debhelper (>= 8)
