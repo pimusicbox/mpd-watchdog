@@ -3,11 +3,11 @@ Upstream-Name: mpd-watchdog
 Source: <https://github.com/gitkemmer/mpd-watchdog>
 
 Files: *
-Copyright: 2013 Thomas Kemmer <tkemmer@computer.org>
+Copyright: 2013, 2015 Thomas Kemmer <tkemmer@computer.org>
 License: MIT
 
 Files: debian/*
-Copyright: 2013 Thomas Kemmer <tkemmer@computer.org>
+Copyright: 2013, 2015 Thomas Kemmer <tkemmer@computer.org>
 License: MIT
 
 License: MIT

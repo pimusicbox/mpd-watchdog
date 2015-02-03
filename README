@@ -1,7 +1,7 @@
 mpd-watchdog
 ============
 
-Monitor a Music Player Daemon (MPD/Mopidy) and restart playback when
+Monitor a music player daemon (MPD/Mopidy) and restart playback when
 it appears to hang.  This can be especially useful when playing
 internet streams.
 

@@ -10,6 +10,6 @@ Package: mpd-watchdog
 Architecture: all
 Depends: mpc, bsdutils, ${misc:Depends}
 Enhances: mpd, mopidy
-Description: monitor mpd while playing internet streams
- Simple watchdog for monitoring Music Player Daemon (MPD/Mopidy) while
- streaming internet radio stations.
+Description: Music player daemon (MPD/Mopidy) watchdog
+ Simple watchdog for monitoring a music player daemon (MPD/Mopidy)
+ while streaming internet radio stations.

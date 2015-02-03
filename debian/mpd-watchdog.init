@@ -7,9 +7,10 @@
 # Should-Stop:       mpd mopidy
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
-# Short-Description: Watchdog for Music Player Daemon (MPD/Mopidy)
-# Description:       Monitor the Music Player Daemon (MPD/Mopidy) while
+# Short-Description: Music player daemon (MPD/Mopidy) watchdog
+# Description:       Monitor a music player daemon (MPD/Mopidy) while
 #                    playing internet streams
+
 ### END INIT INFO
 
 PATH=/sbin:/usr/sbin:/bin:/usr/bin
